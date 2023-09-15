@@ -1,31 +1,52 @@
-name: Build and Deploy Game
+name: Push to AWS S3
+
+ 
 
 on:
   push:
     branches:
-      - main
+      - main  # You can specify the branch you want to trigger this on
+
+ 
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
+ 
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+ 
 
-      - name: Install dependencies
-        run: npm install
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 18
 
-      - name: Build game
-        run: npm run build # Ersätt detta med ditt faktiska byggkommando
+ 
 
-      - name: Deploy to S3
-        run: |
-          aws s3 cp index.html s3://your-bucket-name/path-to-game/
-          aws s3 cp styles.css s3://your-bucket-name/path-to-game/
-          aws s3 cp -r your-assets-folder s3://your-bucket-name/path-to-game/ # Om du har andra resurser
+    - name: Install AWS CLI
+      run: |
+        pip install awscli
+      env:
+        AWS_DEFAULT_REGION: us-east-1  # Change this to your AWS region
+
+ 
+
+    - name: Configure AWS Credentials
+      run: |
+        aws configure set aws_access_key_id ${{ secrets.ACCESS }}
+        aws configure set aws_secret_access_key ${{ secrets.SECRET }}
+      env:
+        AWS_DEFAULT_REGION: us-east-1  # Change this to your AWS region
+
+ 
+
+    - name: Sync Files to S3 Bucket
+      run: |
+        aws s3 cp ./index.html s3://ry1bucket/
+        aws s3 cp ./game.js s3://ry1bucket/
+      working-directory: ./
