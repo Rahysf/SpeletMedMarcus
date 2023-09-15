@@ -59,7 +59,7 @@ document.addEventListener("keydown", (event) => {
   }
 
   
-    if (event.code === "r") {
+    if (event.code === "KeyR") {
 resetGame  }
   
   
