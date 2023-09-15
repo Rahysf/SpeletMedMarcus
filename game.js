@@ -60,7 +60,7 @@ document.addEventListener("keydown", (event) => {
 
   
     if (event.code === "KeyR") {
-resetGame  }
+resetGame();  }
   
   
   if (event.code === "ArrowRight") {
