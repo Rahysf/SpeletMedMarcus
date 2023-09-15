@@ -38,8 +38,8 @@ jobs:
 
     - name: Configure AWS Credentials
       run: |
-        aws configure set aws_access_key_id ${{ secrets.ACCESS }}
-        aws configure set aws_secret_access_key ${{ secrets.SECRET }}
+        aws configure set aws_access_key_id ${{ secrets.RY_ACCESS }}
+        aws configure set aws_secret_access_key ${{ secrets.RY_SECRET }}
       env:
         AWS_DEFAULT_REGION: us-east-1  # Change this to your AWS region
 
