@@ -26,6 +26,6 @@ jobs:
 
       - name: Deploy to S3
         run: |
-          aws s3 cp index.html s3://bucket-name/path-to-game/
-          aws s3 cp styles.css s3://bucket-name/path-to-game/
-          aws s3 cp -r your-assets-folder s3://bucket-name/path-to-game/ # Om du har andra resurser
+          aws s3 cp index.html s3://your-bucket-name/path-to-game/
+          aws s3 cp styles.css s3://your-bucket-name/path-to-game/
+          aws s3 cp -r your-assets-folder s3://your-bucket-name/path-to-game/ # Om du har andra resurser
