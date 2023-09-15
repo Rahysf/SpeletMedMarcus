@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Game
 
 on:
   push:
@@ -13,17 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1 # Ändra till din AWS-region om den är annorlunda.
+          node-version: 14
 
-      - name: Build your HTML game
-        run: |
-          # Här kan du inkludera kommandon för att bygga ditt HTML-spel.
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build game
+        run: npm run build # Ersätt detta med ditt faktiska byggkommando
 
       - name: Deploy to S3
         run: |
-          # Här kan du inkludera kommandon för att kopiera dina filer till S3-bucket.
+          aws s3 cp index.html s3://bucket-name/path-to-game/
+          aws s3 cp styles.css s3://bucket-name/path-to-game/
+          aws s3 cp -r your-assets-folder s3://bucket-name/path-to-game/ # Om du har andra resurser
